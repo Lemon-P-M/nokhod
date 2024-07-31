@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعهدنامه نخود سبز</title>
+    <style>
+        body {
+            direction: rtl;
+            font-family: 'Tahoma', sans-serif;
+            margin: 40px;
+        }
+
+        .container {
+            width: 60%;
+            margin: 0 auto;
+            border: 1px solid #000;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+
+        p {
+            font-size: 20px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .signature-container {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        canvas {
+            border: 1px solid #000;
+            margin-top: 10px;
+            cursor: crosshair;
+        }
+
+        .signature-label {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <p>
+        اینجانب سید محمدامین موسویان تمام تلاش خود را میکنم تا نخود سبز (نخودفرنگی) وی را بدهم حتی با فروش خانه ام و اگر تا قبل از فوت خود نتوانستم نخود سبز وی را بدهم مسئولیت دادن نخود سبز را به نوادگانم می سپارم با تشکر
+        <br><br>
+        امضا :
+    </p>
+
+    <div class="signature-container">
+        <label class="signature-label">اینجا امضا کنید:</label>
+        <canvas id="signature" width="400" height="150"></canvas>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('signature');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+
+    function startDrawing(e) {
+        drawing = true;
+        draw(e);
+    }
+
+    function endDrawing() {
+        drawing = false;
+        ctx.beginPath();  // Reset the path after drawing
+    }
+
+    function draw(e) {
+        if (!drawing) return;
+
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#000';
+
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+    }
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mouseup', endDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseout', endDrawing);
+</script>
+
+</body>
+</html>
